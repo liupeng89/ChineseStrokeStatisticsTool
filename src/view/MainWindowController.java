@@ -190,8 +190,22 @@ public class MainWindowController implements Initializable {
 		String text = this.inputTextArea.getText();
 		
 		// Remove invalid characters from text
+		//[a1] by bianqn 2019-04-30
+		StringBuilder sb = new StringBuilder(text);
+		for(int i=0;i<sb.length();i++) {
+			String regex = "[\\u4e00-\\u9fa5]+";
+			if (!String.valueOf(sb.charAt(i)).matches(regex)) {
+				System.out.println(sb.charAt(i));
+				sb.replace(i,i+1, "");
+				if (1!=0) {
+					i--;
+				}
+			}
+		}
+		text = sb.toString();
+		//[/a1]
 		text = text.replace(" ", "").replace("\t", "").replace("\n", "");
-		System.out.println("Text len: " + text.length());
+	
 		
 		// search stroke order for input characters
 		Set<String> inputStrokes = new HashSet<>();
